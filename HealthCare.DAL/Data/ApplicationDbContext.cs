@@ -35,15 +35,15 @@ namespace HealthCare.DAL.Data
 
             //custom tables
             //relations 
-            builder.Entity<Visit>()
+            builder.Entity<Appointment>()
                .HasOne(v => v.Doctor)
-               .WithMany(u => u.DoctorVisits)
+               .WithMany(u => u.DoctorAppointments)
                .HasForeignKey(v => v.DoctorId)
                .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<Visit>()
+            builder.Entity<Appointment>()
                 .HasOne(v => v.Patient)
-                .WithMany(u => u.PatientVisits)
+                .WithMany(u => u.PatientAppointments)
                 .HasForeignKey(v => v.PatientId)
                 .OnDelete(DeleteBehavior.Restrict);
 

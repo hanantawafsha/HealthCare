@@ -4,49 +4,29 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static HealthCare.DAL.Enums.Enum;
 
 namespace HealthCare.DAL.Models
 {
-    public enum VisitStatus
-    {
-        Pending = 0,
-        Canceled = 1,
-        Approved = 2,
-        InProgress  = 3,
-        Done = 4,
-        Delayed = 5,
-
-
-    }
+    
     public class Visit
     {
+
+
         public int Id { get; set; }
-        //Doctor relation
-        public string DoctorId { get; set; }
-        public virtual ApplicationUser? Doctor { get; set; }
 
-        //Patient relation
 
-        public string PatientId { get; set; }
-        public virtual ApplicationUser? Patient { get; set; }
-
-        public string Notes { get; set; } = string.Empty;
-
-        //treatment relation
-        public virtual ICollection <Treatment>? Treatments { get; set; } = new List<Treatment>();
-        //finance 
-        public decimal TotalAmount { get; set; }
-
-        public VisitStatus Status { get; set; } = VisitStatus.Pending;
-
-        //appointment relation 
-        [ForeignKey("Appointment")]
-
+        // Required link to Appointment
         public int AppointmentId { get; set; }
-        public virtual Appointment Appointment { get; set; }
 
+        public DateTime StartTime { get; set; }
+        public DateTime? EndTime { get; set; }
+        public EncounterStatus Status { get; set; } = EncounterStatus.InProgress;
+        public string? ClinicalNotes { get; set; }
 
-
+        // Navigation property
+        public Appointment Appointment { get; set; } = null!;
+        public virtual ICollection<Treatment> Treatments { get; set; } = new List<Treatment>();
 
 
     }
