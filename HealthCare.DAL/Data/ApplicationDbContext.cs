@@ -34,11 +34,25 @@ namespace HealthCare.DAL.Data
             builder.Ignore<IdentityRoleClaim<string>>();
 
             //custom tables
+            //relations 
+            builder.Entity<Visit>()
+               .HasOne(v => v.Doctor)
+               .WithMany(u => u.DoctorVisits)
+               .HasForeignKey(v => v.DoctorId)
+               .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<Visit>()
+                .HasOne(v => v.Patient)
+                .WithMany(u => u.PatientVisits)
+                .HasForeignKey(v => v.PatientId)
+                .OnDelete(DeleteBehavior.Restrict);
 
         }
 
+      
 
+           
+        
     }
 
 }

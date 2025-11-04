@@ -20,19 +20,20 @@ namespace HealthCare.DAL.Models
     }
     public class Visit
     {
+        public int Id { get; set; }
         //Doctor relation
         public string DoctorId { get; set; }
-        public ApplicationUser? Doctor { get; set; }
+        public virtual ApplicationUser? Doctor { get; set; }
 
         //Patient relation
 
         public string PatientId { get; set; }
-        public ApplicationUser? Patient { get; set; }
+        public virtual ApplicationUser? Patient { get; set; }
 
         public string Notes { get; set; } = string.Empty;
 
         //treatment relation
-        public List<Treatment>? Treatments { get; set; }
+        public virtual ICollection <Treatment>? Treatments { get; set; } = new List<Treatment>();
         //finance 
         public decimal TotalAmount { get; set; }
 
@@ -42,7 +43,7 @@ namespace HealthCare.DAL.Models
         [ForeignKey("Appointment")]
 
         public int AppointmentId { get; set; }
-        public Appointment Appointment { get; set; }
+        public virtual Appointment Appointment { get; set; }
 
 
 

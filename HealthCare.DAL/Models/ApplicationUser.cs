@@ -16,8 +16,8 @@ namespace HealthCare.DAL.Models
         public string Departments { get; set; }
         public string DoctorSpecialization { get; set; }
         //visit relationship 
-        public List<Visit>? DoctorVisits { get; set; }
-        public List<Visit>? PatientVisits { get; set; }
+        public virtual ICollection<Visit>? DoctorVisits { get; set; } = new List<Visit>();
+        public virtual ICollection<Visit>? PatientVisits { get; set; } = new List<Visit>();
 
     }
 }
