@@ -25,7 +25,7 @@ namespace HealthCare.DAL.Models
         //address relationship
         public int? AddressId { get; set; }
         public Address? Address { get; set; }
-        //visit relationship 
+        //appointment relationship 
         public virtual ICollection<Appointment>? DoctorAppointments { get; set; } = new List<Appointment>();
         public virtual ICollection<Appointment>? PatientAppointments { get; set; } = new List<Appointment>();
 

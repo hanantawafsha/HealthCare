@@ -1,10 +1,10 @@
 ﻿using HealthCare.BLL.Services.Interfaces;
-using HealthCare.DAL.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HealthCare.BLL.Repositories.Interfaces;
 
 namespace HealthCare.BLL.Services.Classes
 {

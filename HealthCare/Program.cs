@@ -1,6 +1,7 @@
 
 using HealthCare.DAL.Data;
 using HealthCare.DAL.Models;
+using HealthCare.PL;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,17 +19,25 @@ namespace HealthCare
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
+            //add services and repositories 
+            builder.Services.AddConfig();
             //allow any origin
             var userPolicy = "";
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy(name: userPolicy, policy =>
                 {
-                    policy.AllowAnyOrigin();
+                    policy.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
                 });
             });
+            var connectionString = (builder.Configuration.GetConnectionString("DefaultConnection")
+                ?? throw new InvalidOperationException(" Connection String"
+                + "'DefaultConnection' not found."));
+
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-           options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+           options.UseSqlServer(connectionString));
 
             // Add Identity
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(Options =>
@@ -45,6 +54,11 @@ namespace HealthCare
 
             }).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
+            //service
+            //authentication
+            //+jwt 
+            //stripe
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -57,7 +71,7 @@ namespace HealthCare
 
             app.UseAuthorization();
 
-
+            app.UseAuthentication();
             app.MapControllers();
 
             app.Run();

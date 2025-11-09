@@ -13,6 +13,7 @@ namespace HealthCare.DAL.Models
 
         public string PatientId { get; set; }
         public string DoctorId { get; set; }
+
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public AppointmentStatus Status { get; set; } = AppointmentStatus.Booked;

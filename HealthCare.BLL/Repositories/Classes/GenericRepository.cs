@@ -1,6 +1,6 @@
-﻿using HealthCare.DAL.Data;
+﻿using HealthCare.BLL.Repositories.Interfaces;
+using HealthCare.DAL.Data;
 using HealthCare.DAL.Models;
-using HealthCare.DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HealthCare.DAL.Repositories.Classes
+namespace HealthCare.BLL.Repositories.Classes
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {

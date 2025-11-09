@@ -11,6 +11,9 @@ namespace HealthCare.DAL.Data
         public DbSet<Visit> Visits { get; set; }
         public DbSet<Treatment> Treatments { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<DoctorWorkingHours> DoctorWorkingHours { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
+
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
            : base(options)

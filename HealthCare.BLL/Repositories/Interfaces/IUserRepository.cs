@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HealthCare.DAL.Repositories.Interfaces
+namespace HealthCare.BLL.Repositories.Interfaces
 {
     public interface IUserRepository
     {

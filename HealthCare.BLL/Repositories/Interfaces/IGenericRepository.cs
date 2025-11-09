@@ -1,5 +1,5 @@
 ﻿using HealthCare.DAL.Models;
-namespace HealthCare.DAL.Repositories.Interfaces
+namespace HealthCare.BLL.Repositories.Interfaces
 {
     public interface IGenericRepository<T> where T : class
     {
