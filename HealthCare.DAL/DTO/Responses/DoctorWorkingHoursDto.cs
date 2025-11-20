@@ -5,18 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using static HealthCare.DAL.Enums.Enum;
 
-namespace HealthCare.DAL.Models
+namespace HealthCare.DAL.DTO.Responses
 {
-    public class DoctorWorkingHours
+    public class DoctorWorkingHoursDto
     {
-
-        public int Id { get; set; }
-        public required string DoctorId { get; set; }
         public DayOfWeekEnum Weekday { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
-
-        // Navigation
-        public ApplicationUser Doctor { get; set; } = null!;
-      }
+    }
 }

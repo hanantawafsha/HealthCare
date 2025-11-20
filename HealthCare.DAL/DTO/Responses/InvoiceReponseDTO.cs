@@ -4,18 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HealthCare.DAL.Models
+namespace HealthCare.DAL.DTO
 {
-    public class Invoice
+    public class InvoiceReponseDTO
     {
+
         public int Id { get; set; }
         public string FinanceId { get; set; }
         public int VisitId { get; set; }
-        public decimal TotalAmount { get; set; } = 0;
+        public decimal TotalAmount { get; set; }
         public DateTime? ReviewedAt { get; set; }
-        //Navigation 
-        public ApplicationUser? Finance { get; set; }
-        public required Visit Visit { get; set; } 
+
+        public string? FinanceName { get; set; }
+        public string? PatientName { get; set; }
+        public string? DoctorName { get; set; }
 
     }
 }

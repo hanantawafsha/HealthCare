@@ -1,8 +1,9 @@
-﻿using HealthCare.BLL.Services.Classes;
+﻿using HealthCare.BLL.Repositories.Classes;
+using HealthCare.BLL.Repositories.Interfaces;
+using HealthCare.BLL.Services.Classes;
 using HealthCare.BLL.Services.Interfaces;
 using HealthCare.BLL.Services.Utilities;
-using HealthCare.BLL.Repositories.Classes;
-using HealthCare.BLL.Repositories.Interfaces;
+using HealthCare.DAL.Utilities;
 using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace HealthCare.PL
@@ -14,11 +15,11 @@ namespace HealthCare.PL
             //Services 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
-          //  services.AddScoped<IEmailSender, EmailSetting>();
-
-
+            services.AddScoped<IEmailSender, EmailSetting>();
             //Repositories 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ISeedData, SeedData>();
+
         }
     }
 }

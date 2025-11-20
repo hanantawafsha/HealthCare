@@ -39,6 +39,7 @@ namespace HealthCare.BLL.Services.Classes
                 throw new Exception("user not found");
             }
             var result = await _userManager.ConfirmEmailAsync(user, token);
+            Console.WriteLine(result);
             if (result.Succeeded)
             {
                 return " email confirmed successfully";
@@ -47,9 +48,22 @@ namespace HealthCare.BLL.Services.Classes
             return "email confirmation failed";
         }
 
-        public Task<bool> ForgotPassword(ForgotPasswordRequest request)
+        public async Task<bool> ForgotPassword(ForgotPasswordRequest request)
         {
-            throw new NotImplementedException();
+
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if (user is null)
+            {
+                throw new Exception("User not found");
+            }
+            var random = new Random();
+            var code = random.Next(1000, 9999).ToString();
+            user.CodeResetPassword = code;
+            user.PasswordResetCodeExpire = DateTime.UtcNow.AddMinutes(15);
+
+            await _userManager.UpdateAsync(user);
+            await _emailSender.SendEmailAsync(request.Email, "Reset Password", $"<p> your code to reset your password is {code}");
+            return true;
         }
 
         public async Task<UserResponse> LoginAsync(LoginRequest loginRequest)
@@ -90,7 +104,9 @@ namespace HealthCare.BLL.Services.Classes
                 FullName = registerRequest.FullName,
                 Email = registerRequest.Email,
                 PhoneNumber = registerRequest.PhoneNumber,
-                UserName = registerRequest.UserName
+                UserName = registerRequest.UserName,
+                SlotMinutes = registerRequest.SlotMinutes,
+                DoctorSpecialization = registerRequest.DoctorSpecialization,
             };
             var result = await _userManager.CreateAsync(user, registerRequest.Password);
             if (result.Succeeded)
@@ -98,11 +114,13 @@ namespace HealthCare.BLL.Services.Classes
                 var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 var escapeToken = Uri.EscapeDataString(token);
                 var emailurl = $"{httpRequest.Scheme}://{httpRequest.Host}/api/identity/Accounts/ConfirmEmail?token={escapeToken}&userid={user.Id}";
-                await _emailSender.SendEmailAsync(user.Email, "NTier Shop - Confrim your email", $"<h1> Hello {user.UserName}</h1>" +
+                await _emailSender.SendEmailAsync(user.Email, "Health Care - Confrim your email", $"<h1> Hello {user.UserName}, Please confirm your email</h1>" +
                     $"<a href='{emailurl}'> confirm </a>");
 
-                //add customer role to the created users
-                await _userManager.AddToRoleAsync(user, "Customer");
+                //add Patient role to the created users
+                // await _userManager.AddToRoleAsync(user, "Patient");
+                await _userManager.AddToRoleAsync(user, registerRequest.Role);
+
                 return new UserResponse()
                 {
                     Token = registerRequest.Email
@@ -110,13 +128,31 @@ namespace HealthCare.BLL.Services.Classes
             }
             else
             {
-                throw new Exception($"{result.Errors}");
+                var errors = string.Join(" | ", result.Errors.Select(e => $"{e.Code}: {e.Description}"));
+                throw new Exception(errors);
             }
         }
 
-        public Task<bool> ResetPassword(ResetPasswordRequest request)
+        public async Task<bool> ResetPassword(ResetPasswordRequest request)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if (user is null)
+            {
+                throw new Exception("User not found");
+            }
+
+            if (request.Code != user.CodeResetPassword)
+            {
+                return false;
+            }
+            if (user.PasswordResetCodeExpire < DateTime.UtcNow) return false;
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var result = await _userManager.ResetPasswordAsync(user, token, request.NewPassword);
+            if (result.Succeeded)
+            {
+                await _emailSender.SendEmailAsync(request.Email, "Health Care - Change Password", "<h1> your password has been changed</h1>");
+            }
+            return true;
         }
         private async Task<string> CreateTokenAsync(ApplicationUser user)
         {

@@ -38,12 +38,13 @@ namespace HealthCare.BLL.Repositories.Classes
             return await _context.Set<T>().AsNoTracking().ToListAsync();
         }
 
-        public async Task<T?> GetById(int id)
+
+        public async Task<T?> GetByIdAsyn(int id)
         {
             return await _context.Set<T>().FindAsync(id);
         }
 
-        public async Task<int> Update(T entity)
+        public async Task<int> UpdateAsync(T entity)
         {
             _context.Set<T>().Update(entity);
             return await _context.SaveChangesAsync();

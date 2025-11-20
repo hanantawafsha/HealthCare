@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HealthCare.BLL.Repositories.Interfaces;
+using Mapster;
 
 namespace HealthCare.BLL.Services.Classes
 {
@@ -18,27 +19,36 @@ namespace HealthCare.BLL.Services.Classes
         }
         public async Task<int> AddAsync(TRequest request)
         {
-            throw new NotImplementedException();
+            var entity = request.Adapt<TEntity>();
+           return await _genericRepository.AddAsync(entity);
         }
 
         public async Task<int> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var entity = await _genericRepository.GetByIdAsyn(id);
+            if (entity is null) return 0;
+            return await _genericRepository.DeleteAsync(entity);
         }
 
-        public async Task<IEnumerable<TResponse>> GetAllAsync(bool withTracking = false)
+        public async Task<IEnumerable<TResponse>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var entity = await _genericRepository.GetAllAsync();
+            return entity.Adapt<IEnumerable<TResponse>>();
+
         }
 
         public async Task<TResponse?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var entity = await _genericRepository.GetByIdAsyn(id);
+            return entity is null ? default : entity.Adapt<TResponse>();
         }
 
         public async Task<int> UpdateAsync(int id, TRequest request)
         {
-            throw new NotImplementedException();
+            var entity = await _genericRepository.GetByIdAsyn(id);
+            if (entity is null) return 0;
+            var updatedEntity =  request.Adapt(entity);
+            return  await _genericRepository.UpdateAsync(updatedEntity);
         }
     }
 }

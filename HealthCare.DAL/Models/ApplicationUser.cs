@@ -17,18 +17,16 @@ namespace HealthCare.DAL.Models
         // doctor 
         public int? SlotMinutes { get; set; }
         public string? DoctorSpecialization { get; set; }
-       
+
         // Patient-specific
         public DateTime? DateOfBirth { get; set; }
         public string? Gender { get; set; }
 
         //address relationship
-        public int? AddressId { get; set; }
         public Address? Address { get; set; }
         //appointment relationship 
         public virtual ICollection<Appointment>? DoctorAppointments { get; set; } = new List<Appointment>();
         public virtual ICollection<Appointment>? PatientAppointments { get; set; } = new List<Appointment>();
-
-
+        public virtual ICollection<DoctorWorkingHours> DoctorWorkingHours { get; set; } = new List<DoctorWorkingHours>();
     }
 }

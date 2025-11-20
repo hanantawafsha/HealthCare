@@ -12,6 +12,6 @@ namespace HealthCare.BLL.Services.Interfaces
         Task<int> UpdateAsync(int id, TRequest request);
         Task<int> DeleteAsync(int id);
         Task<TResponse?> GetByIdAsync(int id);
-        Task<IEnumerable<TResponse>> GetAllAsync(bool withTracking = false);
+        Task<IEnumerable<TResponse>> GetAllAsync();
     }
 }

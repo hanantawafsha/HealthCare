@@ -1,15 +1,20 @@
 
 using HealthCare.DAL.Data;
 using HealthCare.DAL.Models;
+using HealthCare.DAL.Utilities;
 using HealthCare.PL;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Scalar.AspNetCore;
+using System.Text;
 
 namespace HealthCare
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +26,7 @@ namespace HealthCare
 
             //add services and repositories 
             builder.Services.AddConfig();
+
             //allow any origin
             var userPolicy = "";
             builder.Services.AddCors(options =>
@@ -32,6 +38,7 @@ namespace HealthCare
                     .AllowAnyMethod();
                 });
             });
+            //connection string 
             var connectionString = (builder.Configuration.GetConnectionString("DefaultConnection")
                 ?? throw new InvalidOperationException(" Connection String"
                 + "'DefaultConnection' not found."));
@@ -56,8 +63,26 @@ namespace HealthCare
 
             //service
             //authentication
+            //jwt service
             //+jwt 
-            //stripe
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("jwtOptions")["SecretKey"]))
+            };
+        });
+            
+            //add stripe
 
             var app = builder.Build();
 
@@ -65,14 +90,24 @@ namespace HealthCare
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
+                app.MapScalarApiReference();
+
             }
 
+            //add seed data 
+            var scope = app.Services.CreateScope();
+            var objectOfSeedData = scope.ServiceProvider.GetRequiredService<ISeedData>();
+            await objectOfSeedData.DataSeedingAsync();
+            await objectOfSeedData.IdentityDataSeedingAsync();
+
             app.UseHttpsRedirection();
-
-            app.UseAuthorization();
-
             app.UseAuthentication();
-            app.MapControllers();
+            //add policy
+            app.UseCors(userPolicy);
+            app.UseAuthorization();
+            // static url - images
+            app.UseStaticFiles();
+            app.MapControllers(); ;
 
             app.Run();
         }

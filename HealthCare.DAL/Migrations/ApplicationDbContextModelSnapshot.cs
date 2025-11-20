@@ -4,19 +4,16 @@ using HealthCare.DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace HealthCare.DAL.Data.Migrations
+namespace HealthCare.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251104210324_InitialCreate2")]
-    partial class InitialCreate2
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,6 +147,9 @@ namespace HealthCare.DAL.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("DoctorWorkingHoursId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
 
@@ -176,9 +176,69 @@ namespace HealthCare.DAL.Data.Migrations
 
                     b.HasIndex("DoctorId");
 
+                    b.HasIndex("DoctorWorkingHoursId");
+
                     b.HasIndex("PatientId");
 
                     b.ToTable("Appointments");
+                });
+
+            modelBuilder.Entity("HealthCare.DAL.Models.DoctorWorkingHours", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("DoctorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<TimeSpan>("EndTime")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("time");
+
+                    b.Property<int>("Weekday")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.ToTable("DoctorWorkingHours");
+                });
+
+            modelBuilder.Entity("HealthCare.DAL.Models.Invoice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("FinanceId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("ReviewedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("VisitId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FinanceId");
+
+                    b.HasIndex("VisitId");
+
+                    b.ToTable("Invoices");
                 });
 
             modelBuilder.Entity("HealthCare.DAL.Models.Treatment", b =>
@@ -299,6 +359,12 @@ namespace HealthCare.DAL.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("HealthCare.DAL.Models.DoctorWorkingHours", "DoctorWorkingHours")
+                        .WithMany()
+                        .HasForeignKey("DoctorWorkingHoursId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("HealthCare.DAL.Models.ApplicationUser", "Patient")
                         .WithMany("PatientAppointments")
                         .HasForeignKey("PatientId")
@@ -307,7 +373,39 @@ namespace HealthCare.DAL.Data.Migrations
 
                     b.Navigation("Doctor");
 
+                    b.Navigation("DoctorWorkingHours");
+
                     b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("HealthCare.DAL.Models.DoctorWorkingHours", b =>
+                {
+                    b.HasOne("HealthCare.DAL.Models.ApplicationUser", "Doctor")
+                        .WithMany("DoctorWorkingHours")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+                });
+
+            modelBuilder.Entity("HealthCare.DAL.Models.Invoice", b =>
+                {
+                    b.HasOne("HealthCare.DAL.Models.ApplicationUser", "Finance")
+                        .WithMany()
+                        .HasForeignKey("FinanceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HealthCare.DAL.Models.Visit", "Visit")
+                        .WithMany()
+                        .HasForeignKey("VisitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Finance");
+
+                    b.Navigation("Visit");
                 });
 
             modelBuilder.Entity("HealthCare.DAL.Models.Treatment", b =>
@@ -355,6 +453,8 @@ namespace HealthCare.DAL.Data.Migrations
             modelBuilder.Entity("HealthCare.DAL.Models.ApplicationUser", b =>
                 {
                     b.Navigation("DoctorAppointments");
+
+                    b.Navigation("DoctorWorkingHours");
 
                     b.Navigation("PatientAppointments");
                 });

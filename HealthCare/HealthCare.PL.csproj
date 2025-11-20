@@ -13,6 +13,7 @@
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.10" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.10" />
 	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.8" />
+	  <PackageReference Include="Scalar.AspNetCore" Version="2.10.3" />
 
   </ItemGroup>
 

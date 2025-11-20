@@ -8,5 +8,7 @@ namespace HealthCare.DAL.Utilities
 {
     public interface ISeedData
     {
+        Task DataSeedingAsync();
+        Task IdentityDataSeedingAsync();
     }
 }

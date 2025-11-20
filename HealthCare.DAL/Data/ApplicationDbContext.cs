@@ -50,6 +50,16 @@ namespace HealthCare.DAL.Data
                 .HasForeignKey(v => v.PatientId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            
+
+            builder.Entity<DoctorWorkingHours>()
+        .HasOne(d => d.Doctor)
+        .WithMany(d => d.DoctorWorkingHours)
+        .HasForeignKey(d => d.DoctorId)
+        .OnDelete(DeleteBehavior.Restrict);
+
+
+
         }
 
       
