@@ -10,10 +10,9 @@ namespace HealthCare.DAL.DTO.Requests
     public class DoctorWorkingHoursRequestDTO
     {
 
-        public required string DoctorId { get; set; }
+       // public required string DoctorId { get; set; }
         public DayOfWeekEnum Weekday { get; set; }
-        public string StartTime { get; set; }
-        public string EndTime { get; set; }
-
+        public TimeSpan StartTime { get; set; }
+        public TimeSpan EndTime { get; set; }
     }
 }

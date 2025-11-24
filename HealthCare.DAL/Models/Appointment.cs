@@ -12,7 +12,7 @@ namespace HealthCare.DAL.Models
         public int Id { get; set; }
         public string PatientId { get; set; }
         public string DoctorId { get; set; }
-        public int DoctorWorkingHoursId { get; set; }
+       // public int DoctorWorkingHoursId { get; set; }
 
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
@@ -24,7 +24,8 @@ namespace HealthCare.DAL.Models
         //navigation properties 
         public virtual ApplicationUser? Patient { get; set; }
         public virtual ApplicationUser? Doctor { get; set; } 
-        public virtual DoctorWorkingHours? DoctorWorkingHours { get; set; }
+       // public virtual DoctorWorkingHours? DoctorWorkingHours { get; set; }
         public Visit? Visit { get; set; }
     }
 }
+

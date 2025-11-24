@@ -19,7 +19,7 @@ namespace HealthCare.DAL.Data
            : base(options)
         {
         }
-       
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -50,22 +50,33 @@ namespace HealthCare.DAL.Data
                 .HasForeignKey(v => v.PatientId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            
+
+            //doctor working hours with users 1tom
 
             builder.Entity<DoctorWorkingHours>()
         .HasOne(d => d.Doctor)
         .WithMany(d => d.DoctorWorkingHours)
         .HasForeignKey(d => d.DoctorId)
-        .OnDelete(DeleteBehavior.Restrict);
+        .OnDelete(DeleteBehavior.NoAction);
 
+
+            //address - user one to one 
+
+            builder.Entity<ApplicationUser>()
+    .HasOne(u => u.Address)
+    .WithOne(a => a.User)
+    .HasForeignKey<ApplicationUser>(u => u.AddressId)
+    .OnDelete(DeleteBehavior.Restrict);
+
+           
 
 
         }
 
-      
 
-           
-        
+
+
+
     }
 
 }

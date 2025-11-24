@@ -15,5 +15,6 @@ namespace HealthCare.BLL.Services.Interfaces
         Task<bool> UnBlockUserAsync(string userId);
         Task<bool> IsBlockAsync(string userId);
         Task<bool> ChangeUserRoleAsync(string userId, string roleName);
+        Task <AddressResponseDto?> GetAddressAsync(string userId);
     }
 }

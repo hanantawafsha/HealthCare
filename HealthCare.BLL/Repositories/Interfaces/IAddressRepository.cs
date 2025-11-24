@@ -10,6 +10,6 @@ namespace HealthCare.BLL.Repositories.Interfaces
 {
     public interface IAddressRepository:IGenericRepository<Address>
     {
-        Task<UserDto> GetUserAddress(string UserId);
+        //Task<UserDto> GetUserAddress(string UserId);
     }
 }

@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace HealthCare.DAL.DTO.Responses
 {
-    public class SlotDto
+    public class AvailableSlotDTO
     {
         public DateTime Date { get; set; }
         public TimeSpan Start { get; set; }
         public TimeSpan End { get; set; }
         public bool IsAvailable { get; set; }
-
     }
 }

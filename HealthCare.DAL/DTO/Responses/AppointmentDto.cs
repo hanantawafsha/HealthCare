@@ -7,8 +7,11 @@ using static HealthCare.DAL.Enums.Enum;
 
 namespace HealthCare.DAL.DTO.Responses
 {
-    public class AppointmentDto
+    public class AppointmentDTO
     {
+       // public int Id { get; set; }
+        public string PatientId { get; set; }
+        public string DoctorId { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public AppointmentStatus Status { get; set; } = AppointmentStatus.Booked;

@@ -23,6 +23,7 @@ namespace HealthCare.DAL.Models
         public string? Gender { get; set; }
 
         //address relationship
+        public int? AddressId { get; set; }
         public Address? Address { get; set; }
         //appointment relationship 
         public virtual ICollection<Appointment>? DoctorAppointments { get; set; } = new List<Appointment>();

@@ -1,4 +1,5 @@
-﻿using HealthCare.DAL.Models;
+﻿using HealthCare.DAL.DTO.Responses;
+using HealthCare.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,6 @@ namespace HealthCare.BLL.Repositories.Interfaces
         Task<bool> UnBlockUserAsync(string userId);
         Task<bool> IsBlockAsync(string userId);
         Task<bool> ChangeUserRole(string userId, string roleName);
+        Task<AddressResponseDto?> GetUserAddressAsync(string userId);
     }
 }

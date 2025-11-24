@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static HealthCare.DAL.Enums.Enum;
 
-namespace HealthCare.DAL.DTO.Responses
+namespace HealthCare.DAL.DTO.Requests
 {
     public class DoctorWorkingHoursDto
     {

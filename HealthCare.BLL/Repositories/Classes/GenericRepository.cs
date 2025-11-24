@@ -21,7 +21,7 @@ namespace HealthCare.BLL.Repositories.Classes
 
         public async Task<int> AddAsync(T entity)
         {
-            _context.Set<T>().Add(entity);
+            await _context.Set<T>().AddAsync(entity);
             return await _context.SaveChangesAsync();
         }
 
@@ -43,6 +43,7 @@ namespace HealthCare.BLL.Repositories.Classes
         {
             return await _context.Set<T>().FindAsync(id);
         }
+
 
         public async Task<int> UpdateAsync(T entity)
         {

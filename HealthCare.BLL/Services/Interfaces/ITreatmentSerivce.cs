@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 
 namespace HealthCare.BLL.Services.Interfaces
 {
-    public interface IAppointmentService: IGenericService<AppointmentRequestDto,AppointmentResponseDto,Appointment>
+    public interface ITreatmentSerivce : IGenericService<TreatmentRequestDTO, TreatmentResponseDTO,Treatment>
     {
-        //Task<AppointmentResponseDto> AddAppointmentAsync(AppointmentRequestDto appointmentRequest);
     }
 }

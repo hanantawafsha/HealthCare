@@ -1,8 +1,9 @@
 ﻿using HealthCare.BLL.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using HealthCare.DAL.DTO.Requests;
 using HealthCare.DAL.DTO.Responses;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 
 
 namespace HealthCare.PL.Areas.Identity
@@ -13,10 +14,13 @@ namespace HealthCare.PL.Areas.Identity
     public class AccountsController : ControllerBase
     {
         private readonly IAuthenticationService _authenticationService;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
-        public AccountsController(IAuthenticationService authenticationService)
+        public AccountsController(IAuthenticationService authenticationService,
+            IStringLocalizer<SharedResource> localizer)
         {
             _authenticationService = authenticationService;
+            _localizer = localizer;
         }
         [HttpPost("register")]
         public async Task<ActionResult<UserResponse>> Register(RegisterRequest registerRequest)

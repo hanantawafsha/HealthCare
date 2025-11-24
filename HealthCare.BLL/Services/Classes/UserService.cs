@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace HealthCare.BLL.Services.Classes
 {
-    public class UserService:IUserService
+    public class UserService: IUserService
     {
         private readonly IUserRepository _userRepository;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -64,6 +64,11 @@ namespace HealthCare.BLL.Services.Classes
         public async Task<bool> ChangeUserRoleAsync(string userId, string roleName)
         {
             return await _userRepository.ChangeUserRole(userId, roleName);
+        }
+
+        public async Task<AddressResponseDto?> GetAddressAsync(string userId)
+        {
+            return await _userRepository.GetUserAddressAsync(userId);
         }
     }
 }

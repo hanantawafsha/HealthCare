@@ -5,9 +5,12 @@ using HealthCare.DAL.Utilities;
 using HealthCare.PL;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
+using System.Globalization;
 using System.Text;
 
 namespace HealthCare
@@ -17,6 +20,31 @@ namespace HealthCare
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            //add locatization 
+            builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+            const string defaultCulture = "en";
+            var supportedCultures = new[]
+            {
+                 new CultureInfo(defaultCulture),
+                 new CultureInfo("ar")
+            };
+            builder.Services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new RequestCulture(defaultCulture);
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+                options.RequestCultureProviders = new List<IRequestCultureProvider>
+                {
+                     new QueryStringRequestCultureProvider()
+                      {
+                            QueryStringKey = "lang"
+                      },
+                };
+            });
+
+
 
             // Add services to the container.
 
@@ -81,7 +109,7 @@ namespace HealthCare
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("jwtOptions")["SecretKey"]))
             };
         });
-            
+
             //add stripe
 
             var app = builder.Build();
@@ -104,6 +132,9 @@ namespace HealthCare
             app.UseAuthentication();
             //add policy
             app.UseCors(userPolicy);
+            //add localizationRequest 
+            app.UseRequestLocalization(app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
+
             app.UseAuthorization();
             // static url - images
             app.UseStaticFiles();

@@ -1,5 +1,8 @@
 ﻿using HealthCare.BLL.Repositories.Interfaces;
+using HealthCare.DAL.Data;
+using HealthCare.DAL.DTO.Responses;
 using HealthCare.DAL.Models;
+using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,10 +16,13 @@ namespace HealthCare.BLL.Repositories.Classes
     public class UserRepository : IUserRepository
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationDbContext _context;
 
-        public UserRepository(UserManager<ApplicationUser> userManager)
+        public UserRepository(UserManager<ApplicationUser> userManager,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
+            _context = context;
         }
         public async Task<List<ApplicationUser>> GetAllAsync()
         {
@@ -77,5 +83,14 @@ namespace HealthCare.BLL.Repositories.Classes
 
         }
 
+        public async Task<AddressResponseDto?> GetUserAddressAsync(string userId)
+        {
+            var result = await _context.Users
+                .Where(u => u.Id == userId)
+                .Select(u => u.Address)
+                .FirstOrDefaultAsync();
+            if (result == null ) { return null; }
+            return result.Adapt<AddressResponseDto>();
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HealthCare.DAL.DTO.Responses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,8 +15,11 @@ namespace HealthCare.DAL.DTO.Responses
         public string DoctorId { get; set; }
         public string DoctorName { get; set; } 
         public DayOfWeekEnum Weekday { get; set; }
-        public string StartTime { get; set; }
-        public string EndTime { get; set; }
+        public TimeSpan StartTime { get; set; }
+        public TimeSpan EndTime { get; set; }
+
+        public List<SlotDto> slotDtos { get; set; } = new List<SlotDto>();
 
     }
 }
+

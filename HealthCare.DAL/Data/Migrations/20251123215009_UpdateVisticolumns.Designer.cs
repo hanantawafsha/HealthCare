@@ -4,16 +4,19 @@ using HealthCare.DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace HealthCare.DAL.Migrations
+namespace HealthCare.DAL.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251123215009_UpdateVisticolumns")]
+    partial class UpdateVisticolumns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -147,6 +150,9 @@ namespace HealthCare.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("DoctorWorkingHoursId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
 
@@ -172,6 +178,8 @@ namespace HealthCare.DAL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DoctorId");
+
+                    b.HasIndex("DoctorWorkingHoursId");
 
                     b.HasIndex("PatientId");
 
@@ -356,6 +364,12 @@ namespace HealthCare.DAL.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("HealthCare.DAL.Models.DoctorWorkingHours", "DoctorWorkingHours")
+                        .WithMany()
+                        .HasForeignKey("DoctorWorkingHoursId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("HealthCare.DAL.Models.ApplicationUser", "Patient")
                         .WithMany("PatientAppointments")
                         .HasForeignKey("PatientId")
@@ -363,6 +377,8 @@ namespace HealthCare.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Doctor");
+
+                    b.Navigation("DoctorWorkingHours");
 
                     b.Navigation("Patient");
                 });

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HealthCare.DAL.DTO.Responses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,14 +11,15 @@ namespace HealthCare.DAL.DTO.Requests
     public class AppointmentRequestDto
     {
 
-        public string PatientId { get; set; } = null!;
-        public string DoctorId { get; set; } = null!;
+       // public string PatientId { get; set; }
+       // public string DoctorId { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public AppointmentStatus Status { get; set; } = AppointmentStatus.Booked;
         public string? Reason { get; set; }
         public string? Notes { get; set; }
         public VisitType? Type { get; set; }
+
 
     }
 }
