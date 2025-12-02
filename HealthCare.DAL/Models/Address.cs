@@ -12,6 +12,7 @@ namespace HealthCare.DAL.Models
         public string? City { get; set; }
         public string? Street { get; set; }
         //public string? UserId { get; set; }
+        //relationship to Application user - navigation properties 
         public ApplicationUser? User { get; set; }
 
     }

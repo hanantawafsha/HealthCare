@@ -120,4 +120,19 @@
   <data name="AddressNotFound" xml:space="preserve">
     <value>Address not found for this user.</value>
   </data>
+  <data name="ExistingWorkingHours" xml:space="preserve">
+    <value>You already have working hours on this day</value>
+  </data>
+  <data name="NoAvailableSlots" xml:space="preserve">
+    <value>No available slots</value>
+  </data>
+  <data name="NoWorkingHours" xml:space="preserve">
+    <value>there is no working hour on this day</value>
+  </data>
+  <data name="SuccessAdded" xml:space="preserve">
+    <value>item added successfully!</value>
+  </data>
+  <data name="SuccessUpdate" xml:space="preserve">
+    <value>item updated Successfully!</value>
+  </data>
 </root>

@@ -120,4 +120,19 @@
   <data name="AddressNotFound" xml:space="preserve">
     <value>.العنوان غير موجود لهذا المستخدم</value>
   </data>
+  <data name="ExistingWorkingHours" xml:space="preserve">
+    <value>عندك ساعات دوام من قبل لهذا اليوم</value>
+  </data>
+  <data name="NoAvailableSlots" xml:space="preserve">
+    <value>.لا يوجد مواعيد متاحة</value>
+  </data>
+  <data name="NoWorkingHours" xml:space="preserve">
+    <value>لا يوجد ساعات عمل لهذا اليوم</value>
+  </data>
+  <data name="SuccessAdded" xml:space="preserve">
+    <value>تم الاضافة بنجاح</value>
+  </data>
+  <data name="SuccessUpdate" xml:space="preserve">
+    <value>تم التحديث بنجاح</value>
+  </data>
 </root>

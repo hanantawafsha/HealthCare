@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using System.Globalization;
 using System.Text;
+using HealthCare.BLL.MapsterConfigurations;
 
 namespace HealthCare
 {
@@ -39,7 +40,7 @@ namespace HealthCare
                 {
                      new QueryStringRequestCultureProvider()
                       {
-                            QueryStringKey = "lang"
+                            QueryStringKey = "lang" 
                       },
                 };
             });
@@ -54,6 +55,9 @@ namespace HealthCare
 
             //add services and repositories 
             builder.Services.AddConfig();
+
+            //add mapster config
+            builder.Services.RegisterMappings();
 
             //allow any origin
             var userPolicy = "";
@@ -106,7 +110,9 @@ namespace HealthCare
                 ValidateAudience = false,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("jwtOptions")["SecretKey"]))
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes
+                (builder.Configuration["jwtOptions:SecretKey"]!))
+                //GetSection("jwtOptions")["SecretKey"]
             };
         });
 
@@ -115,7 +121,7 @@ namespace HealthCare
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
             {
                 app.MapOpenApi();
                 app.MapScalarApiReference();

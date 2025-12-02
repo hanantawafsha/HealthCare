@@ -38,12 +38,13 @@ namespace HealthCare.DAL.Data
 
             //custom tables
             //relations 
+            // Doctor with Applointment 1 - m
             builder.Entity<Appointment>()
                .HasOne(v => v.Doctor)
                .WithMany(u => u.DoctorAppointments)
                .HasForeignKey(v => v.DoctorId)
                .OnDelete(DeleteBehavior.Restrict);
-
+            // Patient with Applointment 1 - m
             builder.Entity<Appointment>()
                 .HasOne(v => v.Patient)
                 .WithMany(u => u.PatientAppointments)
@@ -54,19 +55,19 @@ namespace HealthCare.DAL.Data
             //doctor working hours with users 1tom
 
             builder.Entity<DoctorWorkingHours>()
-        .HasOne(d => d.Doctor)
-        .WithMany(d => d.DoctorWorkingHours)
-        .HasForeignKey(d => d.DoctorId)
-        .OnDelete(DeleteBehavior.NoAction);
+                .HasOne(d => d.Doctor)
+                .WithMany(d => d.DoctorWorkingHours)
+                .HasForeignKey(d => d.DoctorId)
+                .OnDelete(DeleteBehavior.NoAction);
 
 
             //address - user one to one 
 
             builder.Entity<ApplicationUser>()
-    .HasOne(u => u.Address)
-    .WithOne(a => a.User)
-    .HasForeignKey<ApplicationUser>(u => u.AddressId)
-    .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(u => u.Address)
+                .WithOne(a => a.User)
+                .HasForeignKey<ApplicationUser>(u => u.AddressId)
+                .OnDelete(DeleteBehavior.Restrict);
 
            
 

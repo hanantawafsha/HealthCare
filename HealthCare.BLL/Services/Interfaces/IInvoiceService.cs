@@ -11,5 +11,7 @@ namespace HealthCare.BLL.Services.Interfaces
 {
     public interface IInvoiceService : IGenericService<InvoiceRequestDTO, InvoiceReponseDTO,Invoice>
     {
+        Task<InvoiceReponseDTO> CreateInvoiceAsync(int visitId, InvoiceRequestDTO request);
+        Task<InvoiceReponseDTO> GetInvoiceByVisitIdAsync(int visitId);
     }
 }

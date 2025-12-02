@@ -18,6 +18,5 @@ namespace HealthCare.DAL.DTO
         public string? FinanceName { get; set; }
         public string? PatientName { get; set; }
         public string? DoctorName { get; set; }
-
     }
 }

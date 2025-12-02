@@ -4,6 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>093b7ae7-1a57-4ba7-ba4c-87d8b8677a5a</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,11 +17,6 @@
 	  <PackageReference Include="Microsoft.Extensions.Localization" Version="10.0.0" />
 	  <PackageReference Include="Scalar.AspNetCore" Version="2.10.3" />
 
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\Doctor\" />
-    <Folder Include="Areas\Finance\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -12,6 +12,7 @@ namespace HealthCare.DAL.DTO.Responses
         public string Name { get; set; }
         public decimal Cost { get; set; }
         public string Description { get; set; }
+        public VisitReposneDTO visit {  get; set; }
 
     }
 }

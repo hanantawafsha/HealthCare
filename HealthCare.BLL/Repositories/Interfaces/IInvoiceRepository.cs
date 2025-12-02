@@ -9,5 +9,6 @@ namespace HealthCare.BLL.Repositories.Interfaces
 {
     public interface IInvoiceRepository:IGenericRepository<Invoice>
     {
+        Task<Invoice?> GetInvoiceByVisitIdAsync(int visitId);
     }
 }

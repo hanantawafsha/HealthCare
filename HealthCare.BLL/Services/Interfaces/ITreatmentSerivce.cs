@@ -11,5 +11,7 @@ namespace HealthCare.BLL.Services.Interfaces
 {
     public interface ITreatmentSerivce : IGenericService<TreatmentRequestDTO, TreatmentResponseDTO,Treatment>
     {
+        Task<int> AddTreatmentAsync(int visitId, TreatmentRequestDTO request);
+
     }
 }

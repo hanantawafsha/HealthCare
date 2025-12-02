@@ -86,9 +86,8 @@ namespace HealthCare.BLL.Repositories.Classes
         public async Task<AddressResponseDto?> GetUserAddressAsync(string userId)
         {
             var result = await _context.Users
-                .Where(u => u.Id == userId)
-                .Select(u => u.Address)
-                .FirstOrDefaultAsync();
+                .Include(u => u.Address)
+                .FirstOrDefaultAsync(u=>u.Id == userId);
             if (result == null ) { return null; }
             return result.Adapt<AddressResponseDto>();
         }

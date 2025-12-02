@@ -13,6 +13,7 @@ namespace HealthCare.BLL.Repositories.Classes
     {
         public AddressRepository(ApplicationDbContext context) : base(context)
         {
+
         }
     }
 }

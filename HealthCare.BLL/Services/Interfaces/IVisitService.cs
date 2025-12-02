@@ -11,5 +11,8 @@ namespace HealthCare.BLL.Services.Interfaces
 {
     public interface IVisitService : IGenericService<VisitRequestDTO, VisitReposneDTO, Visit>
     {
+        Task<int> AddTreatmentAsync(int visitId, TreatmentRequestDTO request);
+        Task<VisitReposneDTO?> CreateVisitAsync(int appointmentId, VisitRequestDTO request);
+
     }
 }

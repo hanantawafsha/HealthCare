@@ -1,4 +1,5 @@
-﻿using HealthCare.DAL.Models;
+﻿using HealthCare.DAL.DTO.Requests;
+using HealthCare.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

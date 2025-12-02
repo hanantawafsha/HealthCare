@@ -13,7 +13,7 @@ namespace HealthCare.DAL.Models
         public int VisitId { get; set; }
         public decimal TotalAmount { get; set; } = 0;
         public DateTime? ReviewedAt { get; set; }
-        //Navigation 
+        //application and visit relationship - Navigation properties
         public ApplicationUser? Finance { get; set; }
         public required Visit Visit { get; set; } 
 

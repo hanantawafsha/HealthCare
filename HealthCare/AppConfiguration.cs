@@ -18,23 +18,23 @@ namespace HealthCare.PL
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IEmailSender, EmailSetting>();
             services.AddScoped<IDoctorWorkingHoursService, DoctorWorkingHoursService>();
+            services.AddScoped<IDoctorScheduleService, DoctorScheduleService>();
             services.AddScoped<IInvoiceService, InvoiceService>();
             services.AddScoped<ITreatmentSerivce,TreatmentService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IVisitService, VisitService>();
 
-
             //Repositories 
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<IDoctorWorkingHoursRepository, DoctorWorkingHoursRepository>();
+            services.AddScoped<IDoctorScheduleRepository, DoctorScheduleRepository>();
             services.AddScoped<IInvoiceRepository, InvoiceRepository>();
             services.AddScoped<ITreatmentRepository, TreatmentRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IVisitRepository, VisitRepository>();
             services.AddScoped<ISeedData, SeedData>();
-
-
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         }
     }
 }
