@@ -16,5 +16,7 @@ namespace HealthCare.BLL.Repositories.Interfaces
         Task<List<Appointment>> GetAppointmentsByPatientAsync(string patientId);
         //Task<bool> IsDoctorAvailableAsync(string doctorId, DateTime startTime, DateTime endTime);
         //Task<AppointmentResponseDto> CreateAppointmentAsync(string doctorId, string patientId, AppointmentRequestDto request);
+        // Task<AppointmentResponseDto> UpdateStatusAsync(int id,  string status);
+        Task<List<Appointment>> GetAllwithPatientInfo();
     }
 }

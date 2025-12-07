@@ -1,9 +1,12 @@
-﻿using HealthCare.BLL.Repositories.Classes;
+﻿using FluentValidation;
+using HealthCare.BLL.Repositories.Classes;
 using HealthCare.BLL.Repositories.Interfaces;
 using HealthCare.BLL.Services.Classes;
 using HealthCare.BLL.Services.Interfaces;
 using HealthCare.BLL.Services.Utilities;
+using HealthCare.DAL.DTO.Requests;
 using HealthCare.DAL.Utilities;
+using HealthCare.DAL.Validators;
 using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace HealthCare.PL
@@ -20,7 +23,7 @@ namespace HealthCare.PL
             services.AddScoped<IDoctorWorkingHoursService, DoctorWorkingHoursService>();
             services.AddScoped<IDoctorScheduleService, DoctorScheduleService>();
             services.AddScoped<IInvoiceService, InvoiceService>();
-            services.AddScoped<ITreatmentSerivce,TreatmentService>();
+            services.AddScoped<ITreatmentSerivce, TreatmentService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IVisitService, VisitService>();
 
@@ -35,6 +38,9 @@ namespace HealthCare.PL
             services.AddScoped<IVisitRepository, VisitRepository>();
             services.AddScoped<ISeedData, SeedData>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            //Fluent Validation
+            services.AddScoped<IValidator<AppointmentRequestDto>, AppointmentRequestValidator>();
+
         }
     }
 }

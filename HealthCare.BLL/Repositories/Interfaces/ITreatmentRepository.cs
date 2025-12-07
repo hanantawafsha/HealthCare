@@ -10,5 +10,6 @@ namespace HealthCare.BLL.Repositories.Interfaces
 {
     public interface ITreatmentRepository:IGenericRepository<Treatment>
     {
+        Task<List<Treatment>> GetTreatmentsByVisitIdAsync(int visitId);
     }
 }

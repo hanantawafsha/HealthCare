@@ -16,7 +16,7 @@ namespace HealthCare.PL.Areas.Finance
         }
 
         [HttpGet("{visitId}")]
-        public async Task<IActionResult> GetInvoiceVisit([FromRoute] int visitId)
+        public async Task<ActionResult> GetInvoiceVisit([FromRoute] int visitId)
         {
             var result = await _invoiceService.GetInvoiceByVisitIdAsync(visitId);
             return Ok(result);

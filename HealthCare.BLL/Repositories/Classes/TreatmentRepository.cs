@@ -1,8 +1,10 @@
 ﻿using HealthCare.BLL.Repositories.Interfaces;
 using HealthCare.DAL.Data;
 using HealthCare.DAL.DTO.Requests;
+using HealthCare.DAL.DTO.Responses;
 using HealthCare.DAL.Models;
 using Mapster;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,7 +22,11 @@ namespace HealthCare.BLL.Repositories.Classes
         {
             _context = context;
         }
-
-       
+        public async Task<List<Treatment>> GetTreatmentsByVisitIdAsync(int visitId)
+        {
+            return await _context.Treatments
+                .Where(t => t.VisitId == visitId) 
+                .ToListAsync();
+        }
     }
 }

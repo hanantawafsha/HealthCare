@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HealthCare.DAL.DTO
+namespace HealthCare.DAL.DTO.Responses
 {
-    internal class DoctorWorkingHoursDTO
+    public class DoctorWorkingHoursDTO
     {
     }
 }

@@ -4,6 +4,7 @@ using HealthCare.DAL.DTO.Requests;
 using HealthCare.DAL.DTO.Responses;
 using HealthCare.DAL.Models;
 using Mapster;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,5 +38,48 @@ namespace HealthCare.BLL.Services.Classes
 
             return await _treatmentRepository.AddAsync(treatment);
         }
+        public async Task<TreatmentResponseDTO> UpdateTreatmentAsync (int treatmentId, TreatmentRequestDTO request)
+        {
+            var treatment = await _treatmentRepository.GetByIdAsyn(treatmentId);
+            if (treatment == null)
+            {
+                throw new Exception("the selected treatment doesn't exist");
+            }
+            if (request == null)
+            {
+                throw new Exception("Please enter data");
+            }
+            var treatmentDTO = await _treatmentRepository.UpdateAsync(treatment);
+            return treatmentDTO.Adapt<TreatmentResponseDTO>();
+        }
+        public async Task<int> DeleteTreatmentAsync( int treatmentId)
+        {
+            var treatment = await _treatmentRepository.GetByIdAsyn(treatmentId);
+            if (treatment == null)
+            {
+                throw new Exception("the selected treatment doesn't exist");
+            }
+            return await _treatmentRepository.DeleteAsync(treatment);
+        }
+        
+        public async Task<List<TreatmentResponseDTO>> GetTreatmentbyVisitIdAsync(int visitId)
+        {
+
+            var visit = await _visitRepository.GetByIdAsyn(visitId);
+            if (visit == null)
+            {
+                return new List<TreatmentResponseDTO>();
+            }
+
+            var treatments = await _treatmentRepository.GetTreatmentsByVisitIdAsync(visitId);
+            return treatments.Select(t => new TreatmentResponseDTO
+            {
+                Id = t.Id,
+                Name = t.Name,
+                Cost = t.Cost,
+                Description = t.Description
+            }).ToList();
+        }
+
     }
 }

@@ -12,7 +12,7 @@ namespace HealthCare.PL.Areas.Patient
     [Route("api/[area]/[controller]")]
     [ApiController]
     [Area("Patient")]
-    [Authorize(Roles ="Patient")]
+    [Authorize(Roles = "Patient")]
     public class AppointmentsController : ControllerBase
     {
         private readonly IAppointmentService _appointmentService;
@@ -25,19 +25,33 @@ namespace HealthCare.PL.Areas.Patient
             _localizer = localizer;
         }
         [HttpPost("Add/{doctorId}")]
-        public async Task<ActionResult<AppointmentResponseDto>> AddAppointmentAsync([FromRoute] string doctorId,[FromBody] AppointmentRequestDto appointmentRequest)
+        public async Task<ActionResult<AppointmentResponseDto>> AddAppointmentAsync([FromRoute] string doctorId, [FromBody] AppointmentRequestDto appointmentRequest)
         {
             var patientId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var result = await _appointmentService.CreateAppointmentAsync(patientId, doctorId,appointmentRequest);
-            return Ok(result);
+            var result = await _appointmentService.CreateAppointmentAsync(patientId, doctorId, appointmentRequest);
+            return Ok(new { Message = _localizer["SuccessAdded"].Value });
         }
         [HttpPatch("update/{id}")]
-        public async Task<ActionResult> UpdateAppointment([FromRoute] int id, AppointmentRequestDto request )
+        public async Task<IActionResult> UpdateAppointment([FromRoute] int id, AppointmentRequestDto request)
         {
             //var patientId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var result = await _appointmentService.UpdateAppointmentAsyn(id, request);
             return Ok(new { Message = _localizer["SuccessUpdate"].Value });
         }
-        //update status 
+        //cancel appointment
+        //set status = Cancelled
+        [HttpPatch("changeStatus/{id}")]
+        public async Task<IActionResult> UpdateStatus([FromRoute]int id)
+        {
+            var patientId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (patientId == null)
+            {
+                return BadRequest("user not found");
+            }
+            var status = "Cancelled";
+            var result = await _appointmentService.UpdateStatusAsync(id, status, isAdmin: false, patientId);
+            return Ok(new { Message = _localizer["SuccessUpdate"].Value });
+        }
     }
 }

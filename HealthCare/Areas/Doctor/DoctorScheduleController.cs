@@ -1,4 +1,5 @@
 ﻿using HealthCare.BLL.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -8,6 +9,7 @@ namespace HealthCare.PL.Areas.Doctor
     [Route("api/[controller]")]
     [ApiController]
     [Area("Doctor")]
+    [Authorize(Roles = "Doctor")]
 
     public class DoctorScheduleController : ControllerBase
     {

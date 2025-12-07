@@ -5,6 +5,7 @@ using HealthCare.DAL.DTO.Responses;
 using HealthCare.DAL.Models;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using static HealthCare.DAL.Enums.Enum;
 
 
@@ -33,10 +34,18 @@ namespace HealthCare.BLL.Repositories.Classes
         public async Task<List<Appointment>> GetAppointmentsByPatientAsync(string patientId)
         {
             return await _context.Appointments
-                .Where(a=>a.PatientId ==patientId)
+                .Where(a => a.PatientId == patientId)
                         .Include(a => a.Patient)
                         .AsNoTracking()
                         .ToListAsync();
+        }
+
+        public async Task<List<Appointment>> GetAllwithPatientInfo()
+        {
+            return  await _context.Appointments
+                .Include(a => a.Patient)
+                .Include(a => a.Doctor)
+                .ToListAsync();
         }
     }
 }
